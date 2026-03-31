@@ -1,0 +1,121 @@
+{{!-- Top Follow Bar --}}
+<div class="footer-top-bar" style="background-color: #FF66A3; padding: 1rem 0; text-align: center;">
+    <div class="container" style="display: flex; justify-content: center; align-items: center; gap: 1rem; color: var(--color-white); font-weight: 700; font-size: 1.15rem; font-family: var(--font-heading);">
+        Follow Us On 
+        <div class="social-strip-icons" style="display: flex; gap: 1rem; align-items: center;">
+            {{#if @custom.facebook_url}}
+            <a href="{{@custom.facebook_url}}" target="_blank" rel="noopener" aria-label="Facebook" style="color: white; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path></svg>
+            </a>
+            {{/if}}
+            {{#if @custom.twitter_url}}
+            <a href="{{@custom.twitter_url}}" target="_blank" rel="noopener" aria-label="X (Twitter)" style="color: white; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+            </a>
+            {{/if}}
+            {{#if @custom.youtube_url}}
+            <a href="{{@custom.youtube_url}}" target="_blank" rel="noopener" aria-label="YouTube" style="color: white; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21.582 6.186a2.6 2.6 0 0 0-1.838-1.839C18.125 3.92 12 3.92 12 3.92s-6.126 0-7.744.427a2.6 2.6 0 0 0-1.838 1.839C2 7.804 2 12 2 12s0 4.197.418 5.815a2.6 2.6 0 0 0 1.838 1.838C5.874 20.08 12 20.08 12 20.08s6.125 0 7.744-.427a2.6 2.6 0 0 0 1.838-1.838C22 16.197 22 12 22 12s0-4.196-.418-5.814zM9.99 15.51v-7.02L15.938 12 9.99 15.51z"></path></svg>
+            </a>
+            {{/if}}
+            {{#if @custom.contact_email}}
+            <a href="mailto:{{@custom.contact_email}}" aria-label="Email" style="color: white; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M2 5.5v13a2.5 2.5 0 0 0 2.5 2.5h15a2.5 2.5 0 0 0 2.5-2.5v-13A2.5 2.5 0 0 0 19.5 3h-15A2.5 2.5 0 0 0 2 5.5zm18 0v2.036l-8 5.454-8-5.454V5.5a.5.5 0 0 1 .5-.5h15a.5.5 0 0 1 .5.5zm-16 13V9.223l7.432 5.068a1 1 0 0 0 1.136 0L20 9.224V18.5a.5.5 0 0 1-.5.5h-15a.5.5 0 0 1-.5-.5z"></path></svg>
+            </a>
+            {{/if}}
+        </div>
+    </div>
+</div>
+
+<footer class="bhumi-style-footer" style="background-color: #1A1126; color: var(--color-white); padding: 5rem 0 2rem; font-family: var(--font-body);">
+    <div class="container" style="max-width: 1600px; margin: 0 auto; padding: 0 4%;">
+        
+        {{!-- Top Row Grid --}}
+        <div class="footer-main-grid" style="display: grid; grid-template-columns: 1fr; gap: 4rem; margin-bottom: 4rem;">
+            
+            {{!-- Column 1: Brand --}}
+            <div class="footer-col-brand" style="display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; padding-left: 2rem;">
+                <a href="{{@site.url}}" class="footer-brand-logo" style="display: block;">
+                    {{#if @site.logo}}<img src="{{@site.logo}}" alt="Voice of Needy Foundation" style="max-height: 120px; width: auto; display: block; filter: none !important; opacity: 1 !important; mix-blend-mode: normal !important;">{{else}}<span style="color:white; font-weight:800; font-size:1.4rem;">{{@site.title}}</span>{{/if}}
+                </a>
+                <p style="color: rgba(255,255,255,0.8); line-height: 1.6; font-size: 0.95rem; margin: 0; max-width: 300px;">
+                    {{@site.description}}
+                </p>
+                <a href="/contact" class="btn btn-footer-outline" style="background-color: #FF66A3; color: white; border: none; padding: 12px 24px; border-radius: 2px; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; transition: transform 0.2s ease, box-shadow 0.2s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 4px 12px rgba(255,102,163,0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                    Contact Us Now <span style="font-size: 1.2em;">&nearr;</span>
+                </a>
+            </div>
+
+            {{!-- Columns 2-5: Navigation Links --}}
+            <div class="footer-col-nav" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem;">
+                <div class="nav-col">
+                    <h4 style="color: var(--color-white); font-size: 1.1rem; margin-bottom: 1.5rem; font-family: var(--font-heading);">About Us</h4>
+                    {{navigation}}
+                </div>
+                <div class="nav-col">
+                    <h4 style="color: var(--color-white); font-size: 1.1rem; margin-bottom: 1.5rem; font-family: var(--font-heading);">Get Involved</h4>
+                    {{navigation type="secondary"}}
+                </div>
+            </div>
+
+            {{!-- Column 6: Contact Details --}}
+            <div class="footer-col-contact" style="display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-start; margin-top: -0.5rem; padding-right: 2rem;">
+                
+                <div class="fb-col" style="display: flex; flex-direction: column;">
+                    <h5 style="color: var(--color-white); font-size: 1.15rem; margin-bottom: 0.75rem; font-family: var(--font-heading);">Address</h5>
+                    <p style="color: rgba(255,255,255,0.75); font-size: 0.95rem; margin: 0; max-width: 340px; line-height: 1.6;">
+                        Inside ground, Near VK Palace apartment, 10th Main, 2nd Cross, Shankarnagar, Mahalakshmi Layout, Bangalore North, 560086<br><br>
+                        <strong style="color: #fff;">Hessarghatta office:</strong> Multi development center #12, near SP Convention Hall, Nada kacheri road, Hessarghatta Bangalore, 560088
+                    </p>
+                </div>
+                
+                <div class="fb-col" style="display: flex; flex-direction: column;">
+                    <h5 style="color: var(--color-white); font-size: 1.15rem; margin-bottom: 0.75rem; font-family: var(--font-heading);">Call Us</h5>
+                    <p style="margin: 0; line-height: 1.8;">
+                        <a href="tel:7411520526" style="color: rgba(255,255,255,0.75); font-size: 0.95rem; text-decoration: none; display: inline-block;">7411520526</a>
+                        <span style="color: rgba(255,255,255,0.5); margin: 0 4px;">/</span>
+                        <a href="tel:9019466099" style="color: rgba(255,255,255,0.75); font-size: 0.95rem; text-decoration: none; display: inline-block;">9019466099</a>
+                    </p>
+                </div>
+                
+                <div class="fb-col" style="display: flex; flex-direction: column;">
+                    <h5 style="color: var(--color-white); font-size: 1.15rem; margin-bottom: 0.75rem; font-family: var(--font-heading);">Email Us</h5>
+                    <p style="margin: 0; line-height: 1.8;">
+                        <a href="mailto:voiceofneedyfoundation2013@gmail.com" style="color: rgba(255,255,255,0.75); font-size: 0.95rem; text-decoration: none;">
+                            voiceofneedyfoundation2013@gmail.com
+                        </a>
+                    </p>
+                </div>
+
+            </div>
+            
+        </div>
+
+        {{!-- Divider --}}
+        <hr style="border-color: rgba(255,255,255,0.1); margin-bottom: 2rem;">
+
+        {{!-- Bottom Row Grid --}}
+        <div class="footer-bottom-grid" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+            <div class="copyright" style="color: rgba(255, 255, 255, 0.9) !important; font-size: 1rem; font-weight: 500; text-align: center; pointer-events: none;">
+                Voice of Needy Foundation | Copyrights &copy; 2026 All Rights Reserved
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+/* Footer Custom Grid Adjustments */
+.nav-col ul, .nav-col .nav { list-style: none !important; padding: 0 !important; margin: 0 !important; }
+.nav-col li { margin-bottom: 0.75rem !important; list-style-type: none !important; }
+.nav-col a { color: rgba(255,255,255,0.8) !important; font-size: 1rem !important; text-decoration: none !important; font-weight: 400; transition: color 0.3s ease; display: inline-block; }
+.nav-col a:hover { color: var(--color-white) !important; }
+
+/* Apply grid templates similar to the Bhumi screenshot for larger screens */
+@media (min-width: 1024px) {
+    .footer-main-grid { grid-template-columns: 3fr 5.5fr 3fr !important; }
+    .footer-col-nav { grid-template-columns: repeat(4, 1fr) !important; gap: 1.5rem !important; }
+    .footer-bottom-grid { grid-template-columns: 1fr !important; align-items: center !important; }
+    .fb-sep { border-left: 1px solid rgba(255,255,255,0.2); padding-left: 1.5rem; }
+    .right-align { align-items: flex-end !important; text-align: right; }
+}
+</style>

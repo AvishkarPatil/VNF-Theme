@@ -1,0 +1,72 @@
+<div class="a11y-widget" id="a11y-widget">
+  <button class="a11y-toggle" 
+          aria-label="Open accessibility options" 
+          aria-expanded="false"
+          aria-controls="a11y-panel"
+          id="a11y-toggle-btn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <circle cx="12" cy="4" r="2"/>
+      <path d="M19 13v-2h-6l-2-4H7v2h3l1.5 3H7v8h2v-6h4v6h2v-8h3z"/>
+    </svg>
+    <span class="sr-only">Accessibility</span>
+  </button>
+
+  <div class="a11y-panel" id="a11y-panel" role="dialog" aria-labelledby="a11y-panel-title" hidden>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #EAEAEA; padding-bottom: 8px;">
+        <h3 id="a11y-panel-title" style="margin: 0; font-size: 16px; color: var(--color-dark); font-family: var(--font-heading); font-weight: 800; text-transform: uppercase;">Accessibility</h3>
+        <button class="a11y-close" aria-label="Close accessibility options" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666; padding: 0; line-height: 1;">&times;</button>
+    </div>
+
+    <button class="a11y-option" data-action="high-contrast">
+      <span aria-hidden="true" style="margin-right: 8px;">◐</span> High Contrast
+    </button>
+    <div class="a11y-font-controls" style="display: flex; gap: 8px; margin-bottom: 8px; align-items: stretch; height: 42px;">
+      <button class="a11y-font-scale-btn a11y-decrease" aria-label="Decrease Text Size" style="flex:1; background: none; border: 1px solid #e5e7eb; border-radius: 8px; padding: 0; cursor: pointer; color: var(--color-dark); transition: all 0.2s; font-weight:700; display:flex; align-items:center; justify-content:center;">
+        <span aria-hidden="true">A-</span>
+      </button>
+      <div class="a11y-font-level-display" style="flex: 2.2; text-align: center; border: 1px solid #e5e7eb; background: #fafafa; border-radius: 8px; font-size: 13px; font-weight: 600; color: #666; display:flex; align-items:center; justify-content:center;">
+        Text <span id="a11y-font-indicator" style="margin-left:4px; font-weight:800; color:var(--color-dark);">100%</span>
+      </div>
+      <button class="a11y-font-scale-btn a11y-increase" aria-label="Increase Text Size" style="flex:1; background: none; border: 1px solid #e5e7eb; border-radius: 8px; padding: 0; cursor: pointer; color: var(--color-dark); transition: all 0.2s; font-weight:800; font-size: 15px; display:flex; align-items:center; justify-content:center;">
+        <span aria-hidden="true">A+</span>
+      </button>
+    </div>
+    <button class="a11y-option" data-action="read-aloud">
+      <span aria-hidden="true" style="margin-right: 8px;">🔊</span> Read Aloud
+    </button>
+    <button class="a11y-option" data-action="grayscale">
+      <span aria-hidden="true" style="margin-right: 8px;">◯</span> Grayscale
+    </button>
+    <button class="a11y-option" data-action="highlight-links">
+      <span aria-hidden="true" style="margin-right: 8px;">🔗</span> Highlight Links
+    </button>
+    <button class="a11y-option" data-action="dyslexia-font">
+      <span aria-hidden="true" style="margin-right: 8px;">Aa</span> Dyslexia Font
+    </button>
+    <button class="a11y-option" data-action="reduce-motion">
+      <span aria-hidden="true" style="margin-right: 8px;">⏸</span> Reduce Motion
+    </button>
+    
+    <!-- Divider -->
+    <div class="a11y-divider"></div>
+    
+    <!-- Language Section -->
+    <p class="a11y-section-label notranslate" translate="no">Language / ಭಾಷೆ / भाषा</p>
+    
+    <div class="lang-select-container">
+      <select class="a11y-lang-select notranslate" id="a11y-lang-dropdown" translate="no" onchange="translateTo(this.value)">
+        <option value="en" translate="no">English (EN)</option>
+        <option value="kn" translate="no">ಕನ್ನಡ (Kannada)</option>
+        <option value="hi" translate="no">हिंदी (Hindi)</option>
+        <option value="te" translate="no">తెలుగు (Telugu)</option>
+        <option value="ta" translate="no">தமிழ் (Tamil)</option>
+        <option value="mr" translate="no">मराठी (Marathi)</option>
+        <option value="ml" translate="no">മലയാളം (Malayalam)</option>
+        <option value="gu" translate="no">ગુજરાતી (Gujarati)</option>
+      </select>
+    </div>
+    <button class="a11y-option reset-btn" data-action="reset" style="color: #e53e3e; margin-top: 8px; background-color: rgba(229, 62, 62, 0.05); border-color: rgba(229, 62, 62, 0.2);">
+      <span aria-hidden="true" style="margin-right: 8px;">↺</span> Reset All
+    </button>
+  </div>
+</div>

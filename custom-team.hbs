@@ -1,0 +1,91 @@
+{{!< default}}
+
+{{#page}}
+<main class="site-main">
+
+  {{!-- Page Hero with spacing and accent --}}
+  <section class="team-hero-section">
+    <div class="team-hero-inner">
+      <span class="team-hero-label">Voice of Needy Foundation</span>
+      <h1 class="team-hero-heading">{{title}}</h1>
+      {{#if custom_excerpt}}
+        <p class="team-hero-sub">{{custom_excerpt}}</p>
+      {{else}}
+        <p class="team-hero-sub">Meet the passionate individuals working every day to build an inclusive society for persons with disabilities across Karnataka.</p>
+      {{/if}}
+      <div class="team-hero-divider"></div>
+    </div>
+  </section>
+
+  {{!-- Ghost page content (the HTML the editor built) --}}
+  <section class="team-body-section">
+    <div class="team-body-container">
+      {{content}}
+    </div>
+  </section>
+
+</main>
+{{/page}}
+
+<style>
+/* ---- Team Hero ---- */
+.team-hero-section {
+  background: linear-gradient(135deg, #1B4F9B 0%, #0d3470 100%);
+  padding: 5rem 5% 4rem;
+  text-align: center;
+  color: white;
+}
+.team-hero-inner { max-width: 680px; margin: 0 auto; }
+
+.team-hero-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1rem;
+}
+.team-hero-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  margin: 0 0 1.25rem;
+  line-height: 1.15;
+  color: white;
+}
+.team-hero-sub {
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.75;
+  margin: 0 0 2.5rem;
+}
+.team-hero-divider {
+  width: 60px;
+  height: 4px;
+  border-radius: 2px;
+  background: #FF66A3;
+  margin: 0 auto;
+}
+
+/* ---- Body / Content ---- */
+.team-body-section {
+  background: #f9fafb;
+  padding: 1.5rem 0 5rem;
+}
+.team-body-container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 5%;
+}
+
+/* Ghost injects a .gh-content wrapper — remove its default max-width */
+.team-body-container .gh-content {
+  max-width: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .team-hero-section { padding: 3.5rem 5% 3rem; }
+  .team-body-section { padding: 2.5rem 0 4rem; }
+}
+</style>

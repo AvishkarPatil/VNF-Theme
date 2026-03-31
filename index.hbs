@@ -1,0 +1,835 @@
+{{!< default}}
+
+{{!-- SECTION 1 — HERO SLIDER --}}
+<section class="hero-section">
+    <div class="hero-slider">
+        {{#get "posts" filter="tag:hero-slides" limit="5" include="tags"}}
+            {{#if posts}}
+                {{#foreach posts}}
+                <div class="hero-slide {{#if @first}}active{{/if}}" {{#if feature_image}}style="background-image: url('{{img_url feature_image size="xl"}}');"{{/if}}>
+                    <div class="hero-content">
+                        <h2 class="reveal">{{title}}</h2>
+                        <p class="reveal">{{excerpt}}</p>
+                        <a href="{{#if canonical_url}}{{canonical_url}}{{else}}{{url}}{{/if}}" class="btn btn-primary reveal">{{#if meta_title}}{{meta_title}}{{else}}Learn More{{/if}}</a>
+                    </div>
+                </div>
+                {{/foreach}}
+                    <div class="slide-indicators">
+                        {{#foreach posts}}
+                        <button class="slide-dot {{#if @first}}active{{/if}}" aria-label="Go to slide {{@number}}"></button>
+                        {{/foreach}}
+                    </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const rSlides = document.querySelectorAll('.hero-slider > .hero-slide');
+                        const rDots = document.querySelectorAll('.hero-slider .slide-indicators > .slide-dot');
+                        if (rSlides.length > 1) {
+                            let rIndex = 0;
+                            let autoSlide;
+
+                            const slideTo = (index) => {
+                                rSlides[rIndex].classList.remove('active');
+                                if (rDots[rIndex]) rDots[rIndex].classList.remove('active');
+                                
+                                rIndex = index;
+                                
+                                rSlides[rIndex].classList.add('active');
+                                if (rDots[rIndex]) rDots[rIndex].classList.add('active');
+                            };
+
+                            const startAutoSlide = () => {
+                                autoSlide = setInterval(() => {
+                                    slideTo((rIndex + 1) % rSlides.length);
+                                }, 8000); // 8 seconds for better reading time
+                            };
+
+                            rDots.forEach((dot, idx) => {
+                                dot.addEventListener('click', () => {
+                                    clearInterval(autoSlide);
+                                    slideTo(idx);
+                                    startAutoSlide();
+                                });
+                            });
+
+                            startAutoSlide();
+                        }
+                    });
+                </script>
+            {{else}}
+                {{!-- FALLBACK HERO MULTI-SLIDER --}}
+                <div class="fallback-slider-wrapper" style="position: relative; overflow: hidden; height: 100vh;">
+                    <div class="fallback-slides-container" id="fallbackSliderContainer" style="display: flex; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);">
+                        
+                        <div class="fallback-hero-slide" style="min-width: 100%; height: 100%; display: flex; align-items: center; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative;">
+                            <div class="hero-content" style="position: relative; top: 0; transform: none; padding-top: 0;">
+                                <h2 style="opacity: 1; transform: translateY(0);">From Dependence to Independence</h2>
+                                <p style="opacity: 1; transform: translateY(0);">Voice of Needy Foundation empowers individuals with disabilities through education, mobility, and inclusive opportunities across India.</p>
+                                <a href="#about" class="btn btn-primary" style="opacity: 1; transform: translateY(0);">Discover Our Work</a>
+                            </div>
+                        </div>
+
+                        <div class="fallback-hero-slide" style="min-width: 100%; height: 100%; display: flex; align-items: center; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative;">
+                            <div class="hero-content" style="position: relative; top: 0; transform: none; padding-top: 0;">
+                                <h2 style="opacity: 1; transform: translateY(0);">Equipping for the Future</h2>
+                                <p style="opacity: 1; transform: translateY(0);">Providing vocational training and digital literacy to ensure financial stability for youth in rural communities.</p>
+                                <a href="#programs" class="btn btn-primary" style="opacity: 1; transform: translateY(0);">Our Programs</a>
+                            </div>
+                        </div>
+
+                        <div class="fallback-hero-slide" style="min-width: 100%; height: 100%; display: flex; align-items: center; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover; position: relative;">
+                            <div class="hero-content" style="position: relative; top: 0; transform: none; padding-top: 0;">
+                                <h2 style="opacity: 1; transform: translateY(0);">Mobility & Healthcare</h2>
+                                <p style="opacity: 1; transform: translateY(0);">Distributing customized wheelchairs, prosthetics, and running health camps across remote regions.</p>
+                                <a href="#contact" class="btn btn-primary" style="opacity: 1; transform: translateY(0);">Get Involved</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="slide-indicators" id="fallbackIndicators" style="position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 10; display: flex; gap: 10px;">
+                        <button class="slide-dot active" onclick="goToFBSlide(0)"></button>
+                        <button class="slide-dot" onclick="goToFBSlide(1)"></button>
+                        <button class="slide-dot" onclick="goToFBSlide(2)"></button>
+                    </div>
+                </div>
+                <script>
+                    let currentFBSlide = 0;
+                    const fbContainer = document.getElementById('fallbackSliderContainer');
+                    const fbDots = document.querySelectorAll('#fallbackIndicators .slide-dot');
+                    function goToFBSlide(index) {
+                        currentFBSlide = index;
+                        fbContainer.style.transform = `translateX(-${index * 100}%)`;
+                        fbDots.forEach(d => d.classList.remove('active'));
+                        fbDots[index].classList.add('active');
+                    }
+                    setInterval(() => {
+                        goToFBSlide((currentFBSlide + 1) % 3);
+                    }, 5000);
+                </script>
+            {{/if}}
+        {{/get}}
+        <style>
+            .hero-slide.active h2.reveal, .hero-slide.active p.reveal, .hero-slide.active a.reveal {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+                transition-delay: 0.2s;
+            }
+        </style>
+    </div>
+</section>
+
+{{!-- SECTION 2 — ABOUT THE ORGANIZATION (MASONRY SPLIT LAYOUT) --}}
+<section class="section about-section" id="about" style="padding-top: 6rem; padding-bottom: 2rem; width: 100%; overflow: hidden; background-color: #FFFFFF;">
+    <div class="container reveal" style="max-width: 1300px;">
+        
+        <div class="about-split-grid" style="display: grid; grid-template-columns: 1fr 1.1fr; gap: 4rem; align-items: center;">
+            {{!-- Left: Masonry Images Grid --}}
+            <div class="about-images-masonry" style="display: grid; grid-template-columns: 1fr 1.1fr; grid-template-rows: repeat(2, 220px); gap: 16px; width: 100%;">
+                
+                {{!-- Image 1: Left Tall (Children) --}}
+                <div class="img-tall" style="grid-row: 1 / span 2; display: flex; align-items: center; justify-content: flex-end; padding: 3rem 0;">
+                    <img src="{{#if @custom.about_image_1}}{{@custom.about_image_1}}{{else}}https://images.unsplash.com/photo-1509062522246-3755977927d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80{{/if}}" alt="Children Support" style="width: 90%; height: 100%; object-fit: cover; border-radius: 40px 0 0 40px; box-shadow: var(--shadow-sm);">
+                </div>
+                
+                {{!-- Image 2: Top Right (Elderly Man) --}}
+                <div class="img-top-right" style="height: 100%; width: 100%;">
+                    <img src="{{#if @custom.about_image_2}}{{@custom.about_image_2}}{{else}}https://images.unsplash.com/photo-1518398046578-8cca57782e17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80{{/if}}" alt="Elderly Support" style="width: 100%; height: 100%; object-fit: cover; border-radius: 40px 0 40px 0; box-shadow: var(--shadow-sm);">
+                </div>
+                
+                {{!-- Image 3: Bottom Right (Healthcare/Nurses) --}}
+                <div class="img-bottom-right" style="height: 100%; width: 100%;">
+                    <img src="{{#if @custom.about_image_3}}{{@custom.about_image_3}}{{else}}https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80{{/if}}" alt="Healthcare Community" style="width: 100%; height: 100%; object-fit: cover; border-radius: 40px 0 40px 0; box-shadow: var(--shadow-sm);">
+                </div>
+
+            </div>
+
+            {{!-- Right: Typography Content (DYNAMIC) --}}
+            <div class="about-typography" style="padding: 1rem 0;">
+                {{#get "pages" filter="slug:home-about" limit="1"}}
+                    {{#if pages}}
+                        {{#foreach pages}}
+                            <h2 style="font-family: var(--font-heading); font-size: clamp(2.5rem, 3.5vw, 3.2rem); color: #2C285D; line-height: 1.15; margin-bottom: 2rem; letter-spacing: -0.02em; font-weight: 700;">
+                                {{title}}
+                            </h2>
+                            
+                            <div style="width: 100%; height: 3px; background-color: #A0C863; margin-bottom: 2rem;"></div>
+
+                            <div class="about-text" style="color: #4A4A4A; font-size: 1.05rem; line-height: 1.7; display: flex; flex-direction: column; gap: 1.25rem;">
+                                {{content}}
+                            </div>
+                        {{/foreach}}
+                    {{else}}
+                        <!-- FALLBACK IF CMS PAGE NOT CREATED YET -->
+                        <h2 style="font-family: var(--font-heading); font-size: clamp(2.5rem, 3.5vw, 3.2rem); color: #2C285D; line-height: 1.15; margin-bottom: 2rem; letter-spacing: -0.02em; font-weight: 700;">
+                            Leading NGO in India for Healthcare, Education & Community Service
+                        </h2>
+                        
+                        <div style="width: 100%; height: 3px; background-color: #A0C863; margin-bottom: 2rem;"></div>
+
+                        <div class="about-text" style="color: #4A4A4A; font-size: 1.05rem; line-height: 1.7; display: flex; flex-direction: column; gap: 1.25rem;">
+                            <p style="margin: 0;">For twenty-five years, Voice of Needy Foundation has been committed to providing a strong foundation that connects individuals, families and communities to their potential through empowerment, equality and empathy.</p>
+                            <p style="margin: 0;"><strong>Admin Tip:</strong> Create a new Page in your Ghost Admin with the title "home-about" (so its URL slug is <code>home-about</code>) to dynamically replace this exact text!</p>
+                        </div>
+                    {{/if}}
+                {{/get}}
+            </div>
+
+        </div>
+
+        <style>
+            @media (max-width: 1024px) {
+                .about-split-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+                .about-images-masonry { grid-template-rows: repeat(2, 250px) !important; max-width: 600px; margin: 0 auto; }
+            }
+            @media (max-width: 600px) {
+                .about-images-masonry { grid-template-rows: repeat(2, 160px) !important; gap: 12px !important; width: 100% !important; }
+                .img-tall { padding: 0 !important; display: flex; align-items: stretch; justify-content: flex-end; }
+                .img-tall img { width: 95% !important; height: 100% !important; object-fit: cover !important; border-radius: 30px 0 0 30px !important; }
+                .img-top-right img, .img-bottom-right img { height: 100% !important; width: 100% !important; object-fit: cover !important; border-radius: 30px 0 30px 0 !important; }
+            }
+        </style>
+    </div>
+</section>
+
+{{!-- SECTION 3 — MISSION & VISION (ALTERNATING VIDEO & QUOTE BLOCKS) --}}
+<section class="section mission-section" id="mission" style="padding-top: 2rem; padding-bottom: 4rem; background-color: #FFFFFF;">
+    <div class="container reveal" style="max-width: 1300px;">
+        
+        {{!-- BLOCK 1: MISSION --}}
+        <div class="mission-split-block" style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between; align-items: stretch; margin-bottom: 3rem;">
+            
+            {{!-- Left: Video Thumbnail --}}
+            <div class="video-container" style="flex: 1; min-width: 300px; min-height: 300px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-sm); position: relative; background-image: url('{{#if @custom.mission_image}}{{@custom.mission_image}}{{else}}https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80{{/if}}'); background-size: cover; background-position: center; border: 1px solid rgba(0,0,0,0.05);">
+                <div style="position: absolute; inset: 0; background-color: rgba(0,0,0,0.1);"></div>
+            </div>
+
+            {{!-- Right: Purple Mission Text --}}
+            <div class="text-container" style="flex: 1; min-width: 300px; background-color: #007ec2; padding: 2.25rem 3rem; display: flex; flex-direction: column; justify-content: center; position: relative; color: #FFFFFF; border-radius: 8px; box-shadow: var(--shadow-sm); overflow: hidden;">
+                
+                {{!-- Top Quotes --}}
+                <div class="quote-marks" style="display: flex; gap: 8px; margin-bottom: 2rem;">
+                    <div style="width: 14px; height: 36px; background-color: #FFCC00; transform: skewX(-20deg);"></div>
+                    <div style="width: 14px; height: 36px; background-color: #FFCC00; transform: skewX(-20deg);"></div>
+                </div>
+                
+                <h3 style="font-family: var(--font-heading); font-size: clamp(1rem, 1.4vw, 1.25rem); font-weight: 400; line-height: 1.6; margin: 0 0 1.5rem 0;">
+                    <strong style="font-weight: 700; color: #FFFFFF; font-size: 1.15em;">Our Mission</strong><br><br>
+                    Our mission is to prevent secondary deformities through targeted early intervention, empower persons with disabilities through sustainable employment, and collaborate with institutions to ensure disability rights.
+                </h3>
+                
+                <p style="font-size: 0.9rem; margin: 0; color: #FFFFFF; font-weight: 600;">Team Voice of Needy Foundation</p>
+
+                {{!-- Bottom Quotes --}}
+                <div class="quote-marks" style="display: flex; gap: 8px; position: absolute; bottom: 40px; right: 40px;">
+                    <div style="width: 14px; height: 36px; background-color: #FFCC00; transform: skewX(-20deg);"></div>
+                    <div style="width: 14px; height: 36px; background-color: #FFCC00; transform: skewX(-20deg);"></div>
+                </div>
+            </div>
+
+        </div>
+
+        {{!-- BLOCK 2: VISION --}}
+        <div class="mission-split-block vision-block" style="display: flex; flex-wrap: wrap; flex-direction: row-reverse; gap: 1.5rem; justify-content: space-between; align-items: stretch; margin-bottom: 3rem;">
+            
+            {{!-- Right: Video Thumbnail --}}
+            <div class="video-container" style="flex: 1; min-width: 300px; min-height: 300px; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-sm); position: relative; background-image: url('{{#if @custom.vision_image}}{{@custom.vision_image}}{{else}}https://images.unsplash.com/photo-1576085898323-218337e3e43c?auto=format&fit=crop&w=1200&q=80{{/if}}'); background-size: cover; background-position: center; border: 1px solid rgba(0,0,0,0.05);">
+                <div style="position: absolute; inset: 0; background-color: rgba(0,0,0,0.2);"></div>
+            </div>
+
+            {{!-- Left: Purple Vision Text --}}
+            <div class="text-container" style="flex: 1; min-width: 300px; background-color: #007ec2; padding: 2.25rem 3rem; display: flex; flex-direction: column; justify-content: center; position: relative; color: #FFFFFF; border-radius: 8px; box-shadow: var(--shadow-sm); overflow: hidden;">
+                
+                {{!-- Top Quotes --}}
+                <div class="quote-marks" style="display: flex; gap: 8px; margin-bottom: 2rem;">
+                    <div style="width: 14px; height: 36px; background-color: #FFCC00; transform: skewX(-20deg);"></div>
+                    <div style="width: 14px; height: 36px; background-color: #FFCC00; transform: skewX(-20deg);"></div>
+                </div>
+                
+                <h3 style="font-family: var(--font-heading); font-size: clamp(1rem, 1.4vw, 1.25rem); font-weight: 400; line-height: 1.6; margin: 0 0 1.5rem 0;">
+                    <strong style="font-weight: 700; color: #FFFFFF; font-size: 1.15em;">Our Vision</strong><br><br>
+                    Every person with a disability is entitled to lead a quality life with access to proper health, education, and sustainable livelihood support.
+                </h3>
+                
+                <p style="font-size: 0.9rem; margin: 0; color: #FFFFFF; font-weight: 600;">Team Voice of Needy Foundation</p>
+
+                {{!-- Bottom Quotes --}}
+                <div class="quote-marks" style="display: flex; gap: 8px; position: absolute; bottom: 40px; right: 40px;">
+                    <div style="width: 14px; height: 36px; background-color: #FFCC00; transform: skewX(-20deg);"></div>
+                    <div style="width: 14px; height: 36px; background-color: #FFCC00; transform: skewX(-20deg);"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+{{!-- SECTION 4 — IMPACT STATS (REBUILT FOR FULL WIDTH EXACT MATCH) --}}
+<section class="section impact-section" style="background-color: #FFFFFF; padding: 2rem 0; width: 100%; border-top: 1px solid #EAEAEA; border-bottom: 1px solid #EAEAEA;">
+    <div class="container reveal" style="max-width: 1600px;">
+        <div class="impact-stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; text-align: center; align-items: center;">
+            
+            {{!-- Stat 1 --}}
+            <div class="impact-stat-item" style="padding: 2rem; position: relative;">
+                <div class="stat-icon" style="width: 72px; height: 72px; border-radius: 50%; background: #EAF4DB; display: inline-flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
+                    <img src="https://i.ibb.co/Fq6qvcmg/skill.png" alt="Skill Development" style="max-width: 36px; max-height: 36px; object-fit: contain;">
+                </div>
+                <h3 style="font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; color: #1C1C1C; font-family: var(--font-heading); margin-bottom: 0.5rem; line-height: 1; letter-spacing: -0.02em;"><span class="count-up" data-target="3000">0</span><span style="color: var(--color-accent);">+</span></h3>
+                <p style="font-size: 1.15rem; color: #4A4A4A; margin: 0; font-weight: 500; padding: 0 1rem;">People impacted through Social Entitlements & Rights</p>
+                <div class="stat-divider" style="position: absolute; right: 0; top: 15%; bottom: 15%; width: 1px; background-color: rgba(0,0,0,0.1);"></div>
+            </div>
+            
+            {{!-- Stat 2 --}}
+            <div class="impact-stat-item" style="padding: 2rem; position: relative;">
+                <div class="stat-icon" style="width: 72px; height: 72px; border-radius: 50%; background: #EAF4DB; display: inline-flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
+                    <img src="https://i.ibb.co/QjMLbBKS/social-care.png" alt="Social Care" style="max-width: 36px; max-height: 36px; object-fit: contain;">
+                </div>
+                <h3 style="font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; color: #1C1C1C; font-family: var(--font-heading); margin-bottom: 0.5rem; line-height: 1; letter-spacing: -0.02em;"><span class="count-up" data-target="2300">0</span><span style="color: var(--color-accent);">+</span></h3>
+                <p style="font-size: 1.15rem; color: #4A4A4A; margin: 0; font-weight: 500; padding: 0 1rem;">Youth equipped with industry-relevant skills</p>
+                <div class="stat-divider" style="position: absolute; right: 0; top: 15%; bottom: 15%; width: 1px; background-color: rgba(0,0,0,0.1);"></div>
+            </div>
+            
+            {{!-- Stat 3 --}}
+            <div class="impact-stat-item" style="padding: 2rem; position: relative;">
+                <div class="stat-icon" style="width: 72px; height: 72px; border-radius: 50%; background: #EAF4DB; display: inline-flex; justify-content: center; align-items: center; margin-bottom: 1.5rem;">
+                    <img src="https://i.ibb.co/KcTk6bWg/businessman.png" alt="Successfully placed" style="max-width: 36px; max-height: 36px; object-fit: contain;">
+                </div>
+                <h3 style="font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; color: #1C1C1C; font-family: var(--font-heading); margin-bottom: 0.5rem; line-height: 1; letter-spacing: -0.02em;"><span class="count-up" data-target="1763">0</span><span style="color: var(--color-accent);">+</span></h3>
+                <p style="font-size: 1.15rem; color: #4A4A4A; margin: 0; font-weight: 500; padding: 0 1rem;">Persons with disabilities placed in retail & service jobs</p>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<style>
+@media (max-width: 900px) {
+    .impact-stats-grid { grid-template-columns: 1fr !important; gap: 3rem !important; text-align: center; }
+    .stat-divider { display: none !important; }
+}
+</style>
+
+{{!-- SECTION 5 — OUR PROGRAMS --}}
+<section class="section programs-section" id="programs" style="padding: 2.5rem 0;">
+    <div class="container" style="max-width: 1400px;">
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 3.5rem;">
+            <h2 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 3vw, 2.2rem); color: var(--color-dark); margin: 0 auto;">Our Programs</h2>
+            <div style="width: 80px; height: 3px; background-color: var(--color-accent); margin: 1rem auto;"></div>
+            <p style="color: var(--color-text-muted); font-size: 1.05rem; max-width: 900px; margin: 0 auto; line-height: 1.6;">At Voice of Needy, we take utmost care to serve only the highest-quality and most wholesome support to all our beneficiaries. Creating change through focused areas.</p>
+            <p style="font-family: 'Caveat', cursive, serif; font-style: italic; font-weight: 700; color: var(--color-dark); font-size: 1.15rem; margin: 1rem auto 0;">Here's How The Magic Happens!</p>
+        </div>
+        <div class="programs-grid">
+            {{#get "posts" filter="tag:programs" limit="6" include="tags" order="published_at asc"}}
+                {{#if posts}}
+                    {{#foreach posts}}
+                        <a href="{{url}}" class="vnf-program-card">
+                            {{#if feature_image}}
+                                <img src="{{img_url feature_image size="m"}}" alt="{{title}}" class="vpc-image">
+                            {{else}}
+                                <div class="vpc-image" style="background-color: #EAF4DB;"></div>
+                            {{/if}}
+                            
+                            <div class="vpc-gradient"></div>
+                            
+                            <div class="vpc-content">
+                                <div class="vpc-text-wrap">
+                                    <h3 class="vpc-title">{{title}}</h3>
+                                    <div class="vpc-excerpt">
+                                        <p>{{excerpt words="15"}}</p>
+                                    </div>
+                                </div>
+                                <div class="vpc-arrow">
+                                    &rarr;
+                                </div>
+                            </div>
+                        </a>
+                    {{/foreach}}
+                {{else}}
+                    {{!-- FALLBACK CARDS --}}
+                    <a href="#" class="vnf-program-card">
+                        <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600" alt="Scholastic Development" class="vpc-image">
+                        <div class="vpc-gradient"></div>
+                        <div class="vpc-content">
+                            <div class="vpc-text-wrap">
+                                <h3 class="vpc-title">Scholastic Development</h3>
+                                <div class="vpc-excerpt"><p>Creating Pathways to Lifelong Learning</p></div>
+                            </div>
+                            <div class="vpc-arrow">&rarr;</div>
+                        </div>
+                    </a>
+                    <a href="#" class="vnf-program-card">
+                        <img src="https://images.unsplash.com/photo-1540479859555-17af45c78602?q=80&w=600" alt="Workforce Development" class="vpc-image">
+                        <div class="vpc-gradient"></div>
+                        <div class="vpc-content">
+                            <div class="vpc-text-wrap">
+                                <h3 class="vpc-title">Workforce Development</h3>
+                                <div class="vpc-excerpt"><p>Equipping youth with practical, industry-relevant skills.</p></div>
+                            </div>
+                            <div class="vpc-arrow">&rarr;</div>
+                        </div>
+                    </a>
+                    <a href="#" class="vnf-program-card">
+                        <img src="https://images.unsplash.com/photo-1576085898323-218337e3e43c?q=80&w=600" alt="Community Engagement" class="vpc-image">
+                        <div class="vpc-gradient"></div>
+                        <div class="vpc-content">
+                            <div class="vpc-text-wrap">
+                                <h3 class="vpc-title">Community Engagement</h3>
+                                <div class="vpc-excerpt"><p>Distributing wheelchairs and running medical camps.</p></div>
+                            </div>
+                            <div class="vpc-arrow">&rarr;</div>
+                        </div>
+                    </a>
+                {{/if}}
+            {{/get}}
+        </div>
+
+        <style>
+            .programs-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+            @media (max-width: 1024px) {
+                .programs-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+            @media (max-width: 600px) {
+                .programs-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+            .vnf-program-card {
+                position: relative;
+                border-radius: 12px;
+                overflow: hidden;
+                aspect-ratio: 1 / 1.05;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+                display: block;
+                text-decoration: none !important;
+                background-color: #007ec2;
+            }
+            .vnf-program-card .vpc-image {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.6s ease;
+                z-index: 1;
+            }
+            .vnf-program-card .vpc-gradient {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to top, rgba(0, 126, 194, 0.95) 0%, rgba(0, 126, 194, 0.4) 40%, transparent 100%);
+                z-index: 2;
+                transition: background 0.4s ease;
+            }
+            .vnf-program-card .vpc-content {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                padding: 1.5rem;
+                z-index: 3;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+                height: 100%;
+            }
+            .vnf-program-card .vpc-text-wrap {
+                flex: 1;
+                padding-right: 1rem;
+            }
+            .vnf-program-card .vpc-title {
+                color: #FFFFFF;
+                font-family: var(--font-heading);
+                font-size: 1.35rem;
+                font-weight: 700;
+                margin: 0;
+                line-height: 1.3;
+                transition: transform 0.4s ease;
+            }
+            .vnf-program-card .vpc-excerpt {
+                color: rgba(255, 255, 255, 0.95);
+                font-size: 0.95rem;
+                line-height: 1.5;
+                max-height: 150px;
+                opacity: 1;
+                overflow: visible;
+                transition: all 0.4s ease;
+            }
+            .vnf-program-card .vpc-excerpt p {
+                margin: 0.75rem 0 0 0;
+                color: rgba(255, 255, 255, 0.95) !important;
+            }
+            .vnf-program-card .vpc-arrow {
+                width: 44px;
+                height: 44px;
+                background-color: #FFFFFF;
+                color: #54489C;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.25rem;
+                font-weight: 700;
+                flex-shrink: 0;
+                transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+            }
+            /* Hover States */
+            .vnf-program-card:hover .vpc-image {
+                transform: scale(1.05);
+            }
+            .vnf-program-card:hover .vpc-gradient {
+                background: linear-gradient(to top, rgba(0, 126, 194, 0.98) 0%, rgba(0, 126, 194, 0.8) 50%, rgba(0, 126, 194, 0.2) 100%);
+            }
+            .vnf-program-card:hover .vpc-excerpt {
+                max-height: 150px;
+                opacity: 1;
+            }
+            .vnf-program-card:hover .vpc-arrow {
+                transform: translateX(4px);
+                background-color: #FFCC00;
+                color: #1A1126;
+            }
+            @media (max-width: 900px) {
+                /* reserved */
+            }
+            
+            /* FORCE FLEXBOX GRID RULES (CACHE BUSTER) */
+            .programs-grid {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                justify-content: center !important;
+                gap: 3rem !important;
+                width: 100% !important;
+            }
+            .programs-grid > .vnf-program-card {
+                width: calc(33.333% - 2.1rem) !important;
+                flex: 0 0 auto !important;
+            }
+            @media (max-width: 1024px) {
+                .programs-grid > .vnf-program-card {
+                    width: calc(50% - 1.6rem) !important;
+                }
+            }
+            @media (max-width: 600px) {
+                .programs-grid > .vnf-program-card {
+                    width: 100% !important;
+                }
+            }
+        </style>
+    </div>
+</section>
+
+{{!-- SECTION 5.5 — SUCCESS STORIES SLIDER --}}
+<section class="section success-slider-section" style="background-color: #FAFAFA; padding: 4rem 0; overflow: hidden; position: relative;">
+    <div class="container reveal">
+        <div class="success-slider-grid">
+            <div class="success-slider-intro" style="display: flex; flex-direction: column; justify-content: center; position: relative;">
+                <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 3.5vw, 2.8rem); margin-bottom: 1.5rem; color: var(--color-dark); letter-spacing: -0.02em; line-height: 1.1;">Stories of <br><span style="color: var(--color-accent); font-family: 'Caveat', cursive, serif; font-size: 1.2em;">Change</span> </h2>
+                <p style="font-size: 1.05rem; color: #555; margin-bottom: 2.5rem; line-height: 1.6; max-width: 400px;">Real lives. Real impact. Witness how VNF's programs are transforming the lives of persons with disabilities across Karnataka.</p>
+                <a href="/tag/success-stories/" class="btn btn-primary" style="align-self: flex-start; background-color: var(--color-accent); color: #FFF; font-weight: 600; text-decoration: none; padding: 14px 28px; border-radius: 99px; transition: transform 0.2s;">View All Stories &#x2197;</a>
+                
+                <style>
+                    @media (max-width: 1024px) {
+                        .vnf-slider-nav { position: static !important; flex-direction: row !important; transform: none !important; right: auto !important; top: auto !important; margin-top: 1.5rem; justify-content: flex-start; }
+                    }
+                </style>
+                <div class="slider-controls vnf-slider-nav" style="position: absolute; right: -2rem; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 0.5rem; z-index: 10;">
+                    <button class="slide-btn prev-btn" aria-label="Previous" style="width: 44px; height: 44px; border-radius: 50%; background-color: #FFF; border: 1px solid #EAEAEA; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.2rem; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">&lt;</button>
+                    <button class="slide-btn next-btn" aria-label="Next" style="width: 44px; height: 44px; border-radius: 50%; background-color: #FFF; border: 1px solid #EAEAEA; box-shadow: 0 4px 10px rgba(0,0,0,0.05); font-size: 1.2rem; cursor: pointer; color: #555; display: flex; align-items: center; justify-content: center; transition: all 0.2s;">&gt;</button>
+                </div>
+            </div>
+            
+            <div class="success-slider-track-container" style="padding: 1rem 0;">
+                <div class="success-slider-track" id="success-slider-track" style="display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;">
+                    {{#get "posts" limit="6" filter="tag:success-stories"}}
+                        {{#if posts}}
+                            {{#foreach posts}}
+                            <div class="success-card" style="min-width: 320px; background-color: #FFFFFF; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; border-bottom: 4px solid var(--color-accent); box-shadow: 0 5px 20px rgba(0,0,0,0.03); scroll-snap-align: start;">
+                                <a href="{{url}}" class="success-card-link" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                                    <div class="success-card-image" style="aspect-ratio: 4/3; width: 100%; overflow: hidden;">
+                                        {{#if feature_image}}
+                                            <img src="{{img_url feature_image size="m"}}" alt="{{title}}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                                        {{else}}
+                                            <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=600" alt="Fallback Image" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                                        {{/if}}
+                                    </div>
+                                    <div class="success-card-content" style="padding: 1.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+                                        <h3 style="font-size: 1rem; font-weight: 800; color: #111; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;">{{title}}</h3>
+                                        {{#if custom_excerpt}}<p style="color: #666; font-size: 0.95rem; font-weight: 600; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{custom_excerpt}}</p>{{/if}}
+                                    </div>
+                                </a>
+                            </div>
+                            {{/foreach}}
+                        {{else}}
+                            <!-- Fallbacks if no #success-story posts exist yet -->
+                            <div class="success-card" style="min-width: 320px; background-color: #FFFFFF; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; border-bottom: 4px solid var(--color-accent); box-shadow: 0 5px 20px rgba(0,0,0,0.03); scroll-snap-align: start;">
+                                <a href="#" class="success-card-link" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                                    <div class="success-card-image" style="aspect-ratio: 4/3; width: 100%; overflow: hidden;">
+                                        <img src="https://images.unsplash.com/photo-1540479859555-17af45c78602?q=80&w=600" alt="Stop Child Labour" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                                    </div>
+                                    <div class="success-card-content" style="padding: 1.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+                                        <h3 style="font-size: 1rem; font-weight: 800; color: #111; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;">STOP CHILD LABOUR</h3>
+                                        <p style="color: #666; font-size: 0.95rem; font-weight: 600; margin: 0;">Help children go to school instead</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="success-card" style="min-width: 320px; background-color: #FFFFFF; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; border-bottom: 4px solid var(--color-accent); box-shadow: 0 5px 20px rgba(0,0,0,0.03); scroll-snap-align: start;">
+                                <a href="#" class="success-card-link" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                                    <div class="success-card-image" style="aspect-ratio: 4/3; width: 100%; overflow: hidden;">
+                                        <img src="https://images.unsplash.com/photo-1518398046578-8cca57782e17?q=80&w=600" alt="Underprivileged Mothers" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                                    </div>
+                                    <div class="success-card-content" style="padding: 1.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+                                        <h3 style="font-size: 1rem; font-weight: 800; color: #111; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;">HELP UNDERPRIVILEGED MOTHERS</h3>
+                                        <p style="color: #666; font-size: 0.95rem; font-weight: 600; margin: 0;">Provide them the nutritional care</p>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="success-card" style="min-width: 320px; background-color: #FFFFFF; border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; border-bottom: 4px solid var(--color-accent); box-shadow: 0 5px 20px rgba(0,0,0,0.03); scroll-snap-align: start;">
+                                <a href="#" class="success-card-link" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;">
+                                    <div class="success-card-image" style="aspect-ratio: 4/3; width: 100%; overflow: hidden;">
+                                        <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?q=80&w=600" alt="Support Communities" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease;">
+                                    </div>
+                                    <div class="success-card-content" style="padding: 1.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1;">
+                                        <h3 style="font-size: 1rem; font-weight: 800; color: #111; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px;">SUPPORT COMMUNITIES</h3>
+                                        <p style="color: #666; font-size: 0.95rem; font-weight: 600; margin: 0;">Give them resources to thrive endlessly</p>
+                                    </div>
+                                </a>
+                            </div>
+                        {{/if}}
+                    {{/get}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{!-- SECTION 6 — OUR APPROACH (PREMIUM SPLIT) --}}
+<section class="section approach-section" style="background-color: #0c1813; color: white; padding: 8rem 0;">
+    <div class="container reveal">
+        <div class="approach-split">
+            <div class="approach-left">
+                <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; color: #fff;">Our Approach</h2>
+                <p style="font-size: 1.1rem; color: rgba(255,255,255,0.7); max-width: 400px; line-height: 1.6; margin: 0;">We believe in a holistic model of intervention, combining immediate relief with long-term, sustainable empowerment.</p>
+            </div>
+            <div class="approach-right" style="display: flex; flex-direction: column; gap: 1.5rem;">
+                
+                <div class="approach-step" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
+                    <div style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-accent); margin-bottom: 0.5rem; font-weight: 700;">01. Identify & Enroll</div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff;">Early Intervention</h3>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0; font-size: 1rem;">We support children from underprivileged communities and slums affected by malnutrition, developmental delays, and physical disabilities to reach their developmental milestones.</p>
+                </div>
+                
+                <div class="approach-step" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
+                    <div style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-accent); margin-bottom: 0.5rem; font-weight: 700;">02. Equip & Empower</div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff;">Sustainable Livelihoods</h3>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0; font-size: 1rem;">We build an environment that enables persons with disabilities to lead a self-reliant life through sustainable livelihood opportunities, focusing heavily on underserved rural areas.</p>
+                </div>
+                
+                <div class="approach-step" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); padding: 2rem; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
+                    <div style="font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-accent); margin-bottom: 0.5rem; font-weight: 700;">03. Sustain & Integrate</div>
+                    <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff;">Community Based Rehabilitation</h3>
+                    <p style="color: rgba(255,255,255,0.7); line-height: 1.6; margin: 0; font-size: 1rem;">CBR empowers persons with disabilities by ensuring access to healthcare, education, and social inclusion through collaboration between communities, families, and institutions.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{{!-- SECTION 7 — TESTIMONIALS (VOICES OF CHANGE) --}}
+<section class="section testimonials-section" id="testimonials" style="padding: 4rem 0 4rem 0; background-color: #FFFFFF;">
+    <div class="container reveal" style="max-width: 1000px;">
+        
+        <div class="section-header reveal" style="text-align: center; margin-bottom: 2rem;">
+            <h2 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 3vw, 2.2rem); color: var(--color-dark); margin: 0;">Voices of Change</h2>
+            <div style="width: 80px; height: 3px; background-color: var(--color-accent); margin: 1rem auto;"></div>
+        </div>
+
+        <div style="background-color: #F4F3ED; border-radius: 20px; padding: 4rem 3rem; text-align: center; position: relative; margin-top: 2rem;">
+            
+            <div style="font-size: 6rem; color: #FFCC00; line-height: 0.8; font-family: Georgia, serif; font-weight: 900; margin-bottom: 0.5rem;">&rdquo;</div>
+            
+            {{#get "posts" filter="tag:testimonials" limit="1"}}
+                {{#if posts}}
+                    {{#foreach posts}}
+                    <p style="font-family: var(--font-body); font-size: clamp(1.1rem, 2vw, 1.25rem); color: #1C1C1C; line-height: 1.6; max-width: 800px; margin: 0 auto 1.5rem auto; font-weight: 400;">
+                        {{excerpt}}
+                    </p>
+                    <div>
+                        <strong style="color: #1C1C1C; font-size: 1.05rem; display: block; margin-bottom: 0.25rem;">{{title}}</strong>
+                        <span style="font-size: 0.85rem; color: #555;">{{custom_excerpt}}</span>
+                        <div style="width: 60px; height: 2px; background-color: var(--color-accent); margin: 0.5rem auto 0 auto;"></div>
+                    </div>
+                    {{/foreach}}
+                {{else}}
+                    <p style="font-family: var(--font-body); font-size: clamp(1.1rem, 2vw, 1.25rem); color: #1C1C1C; line-height: 1.6; max-width: 800px; margin: 0 auto 1.5rem auto; font-weight: 400;">
+                        Out of compassion towards our fellow living beings, we are committed to making a difference in their lives.
+                    </p>
+                    <div>
+                        <strong style="color: #1C1C1C; font-size: 1.05rem; display: block; margin-bottom: 0.25rem;">Arun Kumar S.</strong>
+                        <span style="font-size: 0.85rem; color: #555;">Founder and Executive Director.</span>
+                        <div style="width: 60px; height: 2px; background-color: var(--color-accent); margin: 0.5rem auto 0 auto;"></div>
+                    </div>
+                {{/if}}
+            {{/get}}
+
+        </div>
+
+    </div>
+</section>
+
+{{!-- SECTION 9 — SPLIT CTA (Volunteer Focused) --}}
+<section class="section vnf-cta-split" style="padding: 5rem 0; background-color: #FAFAFA; border-top: 1px solid #EAEAEA;">
+    <div class="container reveal" style="max-width: 1200px;">
+        <style>
+            .vnf-cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: flex-start; }
+            @media (max-width: 1024px) { .vnf-cta-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; } }
+        </style>
+        <div class="vnf-cta-grid">
+
+            {{!-- Left Side: Intro & Button --}}
+            <div style="padding-right: 2rem;">
+                <div style="display: inline-block; background-color: #3CA4FF; color: #FFF; font-size: 0.85rem; font-weight: 700; padding: 6px 16px; border-radius: 99px; margin-bottom: 1.5rem;">
+                    Volunteering for NGO
+                </div>
+                
+                <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 3.5vw, 2.8rem); line-height: 1.2; margin: 0 0 1rem 0;">
+                    <span style="color: var(--color-dark);">Global Focus Enables</span><br>
+                    <span style="color: var(--color-accent);">Individual Potential</span>
+                </h2>
+                
+                <p style="font-size: 1.05rem; color: #666; line-height: 1.6; margin-bottom: 2.5rem; max-width: 450px;">
+                    If you are still wondering, we would like to be judged by the work we do and not just the words we say.
+                </p>
+                
+                <a href="/donate/" style="background-color: var(--color-accent); color: #FFF; text-decoration: none; padding: 14px 28px; border-radius: 6px; font-weight: 600; font-size: 1rem; display: inline-flex; align-items: center; justify-content: center; transition: transform 0.2s;">
+                    Donate For The Cause &#x2197;
+                </a>
+            </div>
+
+            {{!-- Right Side: Community & Impact --}}
+            <div style="display: flex; flex-direction: column; gap: 2.5rem; padding-left: 2rem;">
+                
+                {{!-- Item 1: Our Community --}}
+                <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                    <div style="width: 64px; height: 64px; background-color: #7DB942; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #FFF; box-shadow: 0 4px 15px rgba(125, 185, 66, 0.3);">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--color-dark); font-size: 1.25rem; font-weight: 700; margin: 0 0 0.5rem 0;">Our Community</h3>
+                        <p style="font-size: 0.95rem; color: #666; line-height: 1.6; margin: 0;">
+                            At Voice of Needy, we strive for meaningful change. Through volunteering, we aim to build a society that empowers every individual to reshape the conversation with their voices and stories.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="height: 1px; background-color: #EAEAEA; width: 100%;"></div>
+
+                {{!-- Item 2: Our Impact --}}
+                <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+                    <div style="width: 64px; height: 64px; background-color: #F89B29; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #FFF; box-shadow: 0 4px 15px rgba(248, 155, 41, 0.3);">
+                        <!-- Target/Bullseye Icon -->
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
+                    </div>
+                    <div>
+                        <h3 style="color: var(--color-dark); font-size: 1.25rem; font-weight: 700; margin: 0 0 0.5rem 0;">Our Impact</h3>
+                        <p style="font-size: 0.95rem; color: #666; line-height: 1.6; margin: 0;">
+                            We have engaged 90,000+ volunteers in various causes aligned to the sustainable development goals of the UN.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <style>
+            @media (max-width: 900px) {
+                .vnf-cta-split > div { grid-template-columns: 1fr !important; gap: 4rem !important; }
+                .vnf-cta-split > div > div { padding-left: 0 !important; padding-right: 0 !important; }
+            }
+        </style>
+    </div>
+</section>
+
+{{!-- SUCCESS STORIES SLIDER LOGIC --}}
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const track = document.getElementById('success-slider-track');
+    if (!track) return;
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const cards = track.querySelectorAll('.success-card');
+    if (cards.length === 0) return;
+    
+    let index = 0;
+    
+    function getVisibleCards() { 
+        return window.innerWidth > 1024 ? 2 : window.innerWidth > 768 ? 2 : 1; 
+    }
+    
+    function updateSlide() {
+        const cardWidth = cards[0].offsetWidth + 24; // card width + 1.5rem gap (24px)
+        const visible = getVisibleCards();
+        const maxIndex = Math.max(0, cards.length - visible);
+        
+        if (index < 0) index = maxIndex;
+        if (index > maxIndex) index = 0;
+        
+        track.scrollTo({ left: index * cardWidth, behavior: 'smooth' });
+    }
+    
+    function resetInterval() { 
+        clearInterval(autoSlide); 
+        autoSlide = setInterval(() => { index++; updateSlide(); }, 10000); 
+    }
+    
+    prevBtn.addEventListener('click', () => { index--; updateSlide(); resetInterval(); });
+    nextBtn.addEventListener('click', () => { index++; updateSlide(); resetInterval(); });
+    
+    let autoSlide = setInterval(() => { index++; updateSlide(); }, 10000);
+    
+    // Sync index if user manually swipes on mobile
+    track.addEventListener('scroll', () => {
+        const cardWidth = cards[0].offsetWidth + 24;
+        index = Math.round(track.scrollLeft / cardWidth);
+    }, { passive: true });
+    
+    window.addEventListener('resize', () => { updateSlide(); });
+});
+
+// IMPACT COUNTER ANIMATION SCRIPT
+document.addEventListener('DOMContentLoaded', () => {
+    const counters = document.querySelectorAll('.count-up');
+    const speed = 200; // lower is slower
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const updateCount = () => {
+                    const target = +counter.getAttribute('data-target');
+                    const count = +counter.innerText.replace(/,/g, '');
+                    const inc = target / speed;
+
+                    if (count < target) {
+                        counter.innerText = Math.ceil(count + inc).toLocaleString();
+                        setTimeout(updateCount, 15);
+                    } else {
+                        counter.innerText = target.toLocaleString();
+                    }
+                };
+                updateCount();
+                observer.unobserve(counter);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => {
+        observer.observe(counter);
+    });
+});
+</script>

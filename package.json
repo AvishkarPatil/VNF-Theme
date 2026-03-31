@@ -1,0 +1,78 @@
+{
+  "name": "vnf-theme",
+  "description": "Custom Ghost theme for Voice of Needy Foundation",
+  "version": "1.0.0",
+  "engines": {
+    "ghost": ">=5.0.0"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Voice of Needy Foundation",
+    "email": "voiceofneedyfoundation2013@gmail.com"
+  },
+  "keywords": [
+    "ghost-theme"
+  ],
+  "config": {
+    "posts_per_page": 6,
+    "card_assets": true,
+    "image_sizes": {
+      "xxs": {
+        "width": 30
+      },
+      "xs": {
+        "width": 100
+      },
+      "s": {
+        "width": 300
+      },
+      "m": {
+        "width": 600
+      },
+      "l": {
+        "width": 1000
+      },
+      "xl": {
+        "width": 2000
+      }
+    },
+    "custom": {
+      "about_image_1": {
+        "type": "image",
+        "description": "About Section Image 1 (Left Tall)"
+      },
+      "about_image_2": {
+        "type": "image",
+        "description": "About Section Image 2 (Top Right)"
+      },
+      "about_image_3": {
+        "type": "image",
+        "description": "About Section Image 3 (Bottom Right)"
+      },
+      "mission_image": {
+        "type": "image",
+        "description": "Mission Section Image"
+      },
+      "vision_image": {
+        "type": "image",
+        "description": "Vision Section Image"
+      },
+      "twitter_url": {
+        "type": "text",
+        "default": "https://x.com/voice_needy"
+      },
+      "facebook_url": {
+        "type": "text",
+        "default": "https://www.facebook.com/Voiceofneedyfoundation2013/"
+      },
+      "youtube_url": {
+        "type": "text",
+        "default": "https://www.youtube.com/channel/UCtvtwdY_pprl-9iAzZmX-kA"
+      },
+      "contact_email": {
+        "type": "text",
+        "default": "voiceofneedyfoundation2013@gmail.com"
+      }
+    }
+  }
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="{{@site.locale}}">
+<head>
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{meta_title}}</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&display=swap');
+    </style>
+    
+    <link rel="stylesheet" type="text/css" href="{{asset "css/screen.css"}}" />
+    
+    {{ghost_head}}
+</head>
+<body class="{{body_class}}">
+    
+    <header class="site-header-pill">
+        <div class="pill-container">
+            <div class="pill-logo">
+                <a href="{{@site.url}}">{{#if @site.logo}}<img src="{{@site.logo}}" alt="{{@site.title}}" />{{else}}<span style="font-weight:800; font-size:1.1rem;">{{@site.title}}</span>{{/if}}</a>
+            </div>
+            <nav class="pill-nav">
+                {{navigation}}
+            </nav>
+            <div class="pill-actions">
+                <a href="/donate/" class="btn btn-subscribe">Donate &rarr;</a>
+                <button class="menu-toggle" aria-label="Menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="site-main {{#is "home"}}is-home{{else}}is-page{{/is}}">
+        {{{body}}}
+    </main>
+
+    {{> "footer"}}
+    {{> "accessibility-widget"}}
+
+    <script src="{{asset "js/main.js"}}" defer></script>
+    
+    <!-- Hidden Google Translate Engine -->
+    <div id="google_translate_element" style="display:none;"></div>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'kn,hi,te,ta,mr,ml,gu,ur,en',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          autoDisplay: false
+        }, 'google_translate_element');
+      }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
+    
+    {{ghost_foot}}
+</body>
+</html>
