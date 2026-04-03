@@ -72,6 +72,18 @@
       "contact_email": {
         "type": "text",
         "default": "voiceofneedyfoundation2013@gmail.com"
+      },
+      "contact_address": {
+        "type": "text",
+        "default": "Inside ground, Near VK Palace apartment, 10th Main, 2nd Cross, Shankarnagar, Mahalakshmi Layout, Bangalore North, 560086"
+      },
+      "contact_address_secondary": {
+        "type": "text",
+        "default": "Hessarghatta office: Multi development center #12, near SP Convention Hall, Nada kacheri road, Hessarghatta Bangalore, 560088"
+      },
+      "contact_phone": {
+        "type": "text",
+        "default": "7411520526 / 9019466099"
       }
     }
   }

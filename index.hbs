@@ -19,42 +19,7 @@
                         <button class="slide-dot {{#if @first}}active{{/if}}" aria-label="Go to slide {{@number}}"></button>
                         {{/foreach}}
                     </div>
-                <script>
-                    document.addEventListener('DOMContentLoaded', () => {
-                        const rSlides = document.querySelectorAll('.hero-slider > .hero-slide');
-                        const rDots = document.querySelectorAll('.hero-slider .slide-indicators > .slide-dot');
-                        if (rSlides.length > 1) {
-                            let rIndex = 0;
-                            let autoSlide;
 
-                            const slideTo = (index) => {
-                                rSlides[rIndex].classList.remove('active');
-                                if (rDots[rIndex]) rDots[rIndex].classList.remove('active');
-                                
-                                rIndex = index;
-                                
-                                rSlides[rIndex].classList.add('active');
-                                if (rDots[rIndex]) rDots[rIndex].classList.add('active');
-                            };
-
-                            const startAutoSlide = () => {
-                                autoSlide = setInterval(() => {
-                                    slideTo((rIndex + 1) % rSlides.length);
-                                }, 8000); // 8 seconds for better reading time
-                            };
-
-                            rDots.forEach((dot, idx) => {
-                                dot.addEventListener('click', () => {
-                                    clearInterval(autoSlide);
-                                    slideTo(idx);
-                                    startAutoSlide();
-                                });
-                            });
-
-                            startAutoSlide();
-                        }
-                    });
-                </script>
             {{else}}
                 {{!-- FALLBACK HERO MULTI-SLIDER --}}
                 <div class="fallback-slider-wrapper" style="position: relative; overflow: hidden; height: 100vh;">
@@ -182,9 +147,9 @@
             }
             @media (max-width: 600px) {
                 .about-images-masonry { grid-template-rows: repeat(2, 160px) !important; gap: 12px !important; width: 100% !important; }
-                .img-tall { padding: 0 !important; display: flex; align-items: stretch; justify-content: flex-end; }
-                .img-tall img { width: 95% !important; height: 100% !important; object-fit: cover !important; border-radius: 30px 0 0 30px !important; }
-                .img-top-right img, .img-bottom-right img { height: 100% !important; width: 100% !important; object-fit: cover !important; border-radius: 30px 0 30px 0 !important; }
+                .img-tall { padding: 0 !important; display: flex; align-items: stretch; justify-content: center; }
+                .img-tall img { width: 100% !important; height: 100% !important; object-fit: cover !important; border-radius: 16px !important; }
+                .img-top-right img, .img-bottom-right img { height: 100% !important; width: 100% !important; object-fit: cover !important; border-radius: 16px !important; }
             }
         </style>
     </div>

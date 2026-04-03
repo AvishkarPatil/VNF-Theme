@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
     // 1. & 2. Header Scroll & Mobile Menu Toggle
-    const header = document.querySelector('.site-header');
+    const header = document.querySelector('.site-header-pill');
     const menuToggle = document.querySelector('.menu-toggle');
     const navWrapper = document.querySelector('.pill-nav');
 
     window.addEventListener('scroll', () => {
+        if (!header) return;
         if (window.scrollY > 80) {
             header.classList.add('scrolled');
         } else {
@@ -18,48 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2.5 Dropdown Menu Logic for Ghost '- ' prefixed items
-    const navNodes = document.querySelectorAll('.pill-nav .nav > li');
-    let currentDropdown = null;
-    let dropdownList = null;
-
-    navNodes.forEach(node => {
-        const link = node.querySelector('a');
-        if (!link) return;
-        
-        const text = link.textContent.trim();
-        
-        // If the label starts with a hyphen, it's a dropdown child
-        if (text.startsWith('-')) {
-            // Remove the hyphen from the text
-            link.textContent = text.substring(1).trim();
-            
-            // If we don't have an active dropdown container, create one on the PREVIOUS valid sibling
-            if (!currentDropdown) {
-                const prevNode = node.previousElementSibling;
-                if (prevNode) {
-                    currentDropdown = prevNode;
-                    currentDropdown.classList.add('has-dropdown');
-                    
-                    // Add SVG arrow
-                    currentDropdown.querySelector('a').innerHTML += ' <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-                    
-                    dropdownList = document.createElement('ul');
-                    dropdownList.className = 'nav-dropdown';
-                    currentDropdown.appendChild(dropdownList);
-                }
+    // Close mobile menu when clicking outside of it
+    document.addEventListener('click', (e) => {
+        if (navWrapper && navWrapper.classList.contains('open')) {
+            if (!navWrapper.contains(e.target) && !menuToggle.contains(e.target)) {
+                navWrapper.classList.remove('open');
             }
-            
-            // Move this node into the dropdown list
-            if (dropdownList) {
-                dropdownList.appendChild(node);
-            }
-        } else {
-            // Reset dropdown context if a normal link appears
-            currentDropdown = null;
-            dropdownList = null;
         }
     });
+
+
 
     // 2.6 Footer Navigation Refactoring
     const footerNavCol = document.querySelector('.footer-col-nav');

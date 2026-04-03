@@ -24,6 +24,36 @@
             </div>
             <nav class="pill-nav">
                 {{navigation}}
+                <script>
+                    (function() {
+                        const navNodes = document.querySelectorAll('.pill-nav .nav > li');
+                        let currentDropdown = null;
+                        let dropdownList = null;
+                        navNodes.forEach(node => {
+                            const link = node.querySelector('a');
+                            if (!link) return;
+                            const text = link.textContent.trim();
+                            if (text.startsWith('-')) {
+                                link.textContent = text.substring(1).trim();
+                                if (!currentDropdown) {
+                                    const prevNode = node.previousElementSibling;
+                                    if (prevNode) {
+                                        currentDropdown = prevNode;
+                                        currentDropdown.classList.add('has-dropdown');
+                                        currentDropdown.querySelector('a').innerHTML += ' <svg width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+                                        dropdownList = document.createElement('ul');
+                                        dropdownList.className = 'nav-dropdown';
+                                        currentDropdown.appendChild(dropdownList);
+                                    }
+                                }
+                                if (dropdownList) dropdownList.appendChild(node);
+                            } else {
+                                currentDropdown = null;
+                                dropdownList = null;
+                            }
+                        });
+                    })();
+                </script>
             </nav>
             <div class="pill-actions">
                 <a href="/donate/" class="btn btn-subscribe">Donate &rarr;</a>

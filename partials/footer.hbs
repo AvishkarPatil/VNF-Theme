@@ -64,25 +64,25 @@
                 <div class="fb-col" style="display: flex; flex-direction: column;">
                     <h5 style="color: var(--color-white); font-size: 1.15rem; margin-bottom: 0.75rem; font-family: var(--font-heading);">Address</h5>
                     <p style="color: rgba(255,255,255,0.75); font-size: 0.95rem; margin: 0; max-width: 340px; line-height: 1.6;">
-                        Inside ground, Near VK Palace apartment, 10th Main, 2nd Cross, Shankarnagar, Mahalakshmi Layout, Bangalore North, 560086<br><br>
-                        <strong style="color: #fff;">Hessarghatta office:</strong> Multi development center #12, near SP Convention Hall, Nada kacheri road, Hessarghatta Bangalore, 560088
+                        {{#if @custom.contact_address}}{{@custom.contact_address}}{{/if}}<br><br>
+                        {{#if @custom.contact_address_secondary}}<strong style="color: #fff;">{{@custom.contact_address_secondary}}</strong>{{/if}}
                     </p>
                 </div>
                 
                 <div class="fb-col" style="display: flex; flex-direction: column;">
                     <h5 style="color: var(--color-white); font-size: 1.15rem; margin-bottom: 0.75rem; font-family: var(--font-heading);">Call Us</h5>
                     <p style="margin: 0; line-height: 1.8;">
-                        <a href="tel:7411520526" style="color: rgba(255,255,255,0.75); font-size: 0.95rem; text-decoration: none; display: inline-block;">7411520526</a>
-                        <span style="color: rgba(255,255,255,0.5); margin: 0 4px;">/</span>
-                        <a href="tel:9019466099" style="color: rgba(255,255,255,0.75); font-size: 0.95rem; text-decoration: none; display: inline-block;">9019466099</a>
+                        <a {{#if @custom.contact_phone}}href="tel:{{@custom.contact_phone}}"{{/if}} style="color: rgba(255,255,255,0.75); font-size: 0.95rem; text-decoration: none; display: inline-block;">
+                            {{#if @custom.contact_phone}}{{@custom.contact_phone}}{{else}}Provide phone in Ghost Admin -> Settings -> Site{{/if}}
+                        </a>
                     </p>
                 </div>
                 
                 <div class="fb-col" style="display: flex; flex-direction: column;">
                     <h5 style="color: var(--color-white); font-size: 1.15rem; margin-bottom: 0.75rem; font-family: var(--font-heading);">Email Us</h5>
                     <p style="margin: 0; line-height: 1.8;">
-                        <a href="mailto:voiceofneedyfoundation2013@gmail.com" style="color: rgba(255,255,255,0.75); font-size: 0.95rem; text-decoration: none;">
-                            voiceofneedyfoundation2013@gmail.com
+                        <a {{#if @custom.contact_email}}href="mailto:{{@custom.contact_email}}"{{/if}} style="color: rgba(255,255,255,0.75); font-size: 0.95rem; text-decoration: none;">
+                            {{#if @custom.contact_email}}{{@custom.contact_email}}{{else}}Provide email in Ghost Admin -> Settings -> Site{{/if}}
                         </a>
                     </p>
                 </div>
